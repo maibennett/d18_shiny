@@ -53,14 +53,18 @@ server = function(input, output, session) {
                       selected="Porcentaje")
     
     d_participacion = reactive({
-        d$p = d$participacion2020_proy2017
+        #d$p = d$participacion2020_proy2017
+        d$p = d$p2020
         d$votes2020 = NA
         
-        if(input$EfectoPlebiscito=="Si"){
-            d$p = d$p*(1+d$EfectoPlebiscito)
+        #if(input$EfectoPlebiscito=="Si"){
+        if(input$EfectoPlebiscito=="No"){
+            #d$p = d$p*(1+d$EfectoPlebiscito)
+            d$p = d$p*(1-d$EfectoPlebiscito)
         }
         
-        d$p = d$p*(1+d$EfectoCOVID*input$EfectoPandemia)
+        #d$p = d$p*(1+d$EfectoCOVID*input$EfectoPandemia)
+        d$p = d$p*(1-d$EfectoCOVID*(1-input$EfectoPandemia))
         
         d_part = d %>%
             mutate(votes2020 = p*n2020)
