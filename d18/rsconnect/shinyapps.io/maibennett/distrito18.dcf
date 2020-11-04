@@ -5,8 +5,8 @@ account: maibennett
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3156165
-bundleId: 3817565
+bundleId: 3821295
 url: https://maibennett.shinyapps.io/distrito18/
-when: 1604449204.6369
+when: 1604527885.5083
 asMultiple: FALSE
 asStatic: FALSE
