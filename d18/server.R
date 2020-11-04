@@ -22,9 +22,13 @@ hrbrthemes::update_geom_font_defaults(family=font_fsm)
 
 URLd18 = "https://raw.githubusercontent.com/maibennett/d18/main/data/otros/d_export.csv"
 URLd18_listas = "https://raw.githubusercontent.com/maibennett/d18/main/data/otros/resultados_core2017.csv"
+URLd18_efectos = "https://raw.githubusercontent.com/maibennett/d18/main/data/otros/efectos.csv"
 
 d = read.csv(URLd18)
 d_listas = read.csv(URLd18_listas)
+d_efectos = read.csv(URLd18_efectos)
+
+d = left_join(d,d_efectos,by="COMUNA")
 
 # Define server logic required to draw a histogram
 server = function(input, output, session) {
