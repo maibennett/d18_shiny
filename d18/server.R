@@ -14,7 +14,7 @@ library(gridExtra)
 library(gtable)
 library(hrbrthemes)
 library(stringr)
-library(leaflet)
+library(emo)
 
 ## ENGLISH VERSION
 
@@ -184,9 +184,9 @@ server = function(input, output, session) {
     renderElectedChart = function() {
         renderPlotly({
             
-            data = d_all()
+            data2 = d_all()
             
-            data$votes2020 = data$vote*d_all$perc_votos2017
+            data2$votes2020 = data2$vote*data2$perc_votos2017
             
             n_cupos = 4
             
@@ -194,7 +194,7 @@ server = function(input, output, session) {
             
             alloc = 0
             
-            d_all_listas = data %>% group_by(lista_select) %>%
+            d_all_listas = data2 %>% group_by(lista_select) %>%
                 summarise(total_votes = sum(votes2020))
             
             d_all_listas$lista_select = as.character(d_all_listas$lista_select)
@@ -218,15 +218,27 @@ server = function(input, output, session) {
             d_all_listas$cupos = d_all_listas$cupos_aux - 1
             
             
+            if(length(unique(data2$lista_select))==3){
+                col_pal = c("#900DA4",
+                            "#F89441","#FCCE25")
+            }
             
-            plt = d_all_listas_cupos %>%
-                plot_ly(x = ~COMUNA, y = ~metric, color = ~lista_select, type = 'bar',
+            if(length(unique(data2$lista_select))==2){
+                col_pal = c("#900DA4","#FCCE25")
+            }
+            if(length(unique(data2$lista_select))>3){
+                col_pal = c("#0D0887","#5601A4","#900DA4",
+                            "#BF3984","#F89441","#FCCE25")
+            }
+            
+            plt = d_all_listas %>%
+                plot_ly(type = 'scatter', mode = 'markers',
                         colors = col_pal)  %>% 
-                layout(title = list(text = "Resultados Votacion por Lista (Simulacion 2021)",y=1.2),
+                layout(title = list(text = "Numero de cupos por lista (Simulacion 2021)",y=1.2),
                        xaxis = list(title = ""),
-                       yaxis = list(side = 'left', title = 'Votacion 2021', 
-                                    showgrid = FALSE, zeroline = TRUE),
-                       barmode = 'stack',
+                       yaxis = list(side = 'left', title = 'Numero de cupos', 
+                                    showgrid = FALSE, zeroline = TRUE,
+                                    tick0 = 0, dtick = 1),
                        #margin=m1,
                        plot_bgcolor="rgba(0, 0, 0, 0)",
                        paper_bgcolor="rgba(0, 0, 0, 0)",
@@ -234,7 +246,16 @@ server = function(input, output, session) {
                                      xanchor = 'center',
                                      x=0.5,
                                      bgcolor=alpha("#000000FF",0),
-                                     bordercolor=alpha("#000000FF",0)))
+                                     bordercolor=alpha("#000000FF",0))) %>%
+                add_trace(x = ~lista_select, y = ~cupos, 
+                          color = ~lista_select, opacity = 1, showlegend = FALSE,
+                          marker = list(size=15, color = 'white',line = list(width = 2, alpha=1))) %>%
+                add_trace(x = ~lista_select, y = ~cupos, 
+                          color = ~lista_select, opacity = 0.5, showlegend = FALSE,
+                          marker = list(size=11, line = list(width = 2, alpha=1)),
+                          hoverinfo = "text",text=~paste0(lista_select,": \n",
+                                                          cupos," cupos\n",
+                                                          round(total_votes,0)," votos"))
             
             
             plt
@@ -243,5 +264,6 @@ server = function(input, output, session) {
     }
     
     output$Votes2020 = renderBarChart()
+    output$Cupos2020 = renderElectedChart()
 
 }

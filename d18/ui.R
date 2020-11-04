@@ -402,6 +402,13 @@ shinyUI(fluidPage(
                         ),
                         fluidRow(column(12,plotlyOutput("Votes2020",width="100%"))
                         ),
+                        fluidRow(column(12, HTML(paste0("<p class='note'>","Nota: Participacion basada en padron 2020, participacion 2017-2020, y votacion para COREs 2017","</p>")))),
+                        
+                        fluidRow(column(12,"")
+                        ),
+                        
+                        fluidRow(column(12,plotlyOutput("Cupos2020",width="100%"))
+                        ),
                         fluidRow(column(12, HTML(paste0("<p class='note'>","Nota: Participacion basada en padron 2020, participacion 2017-2020, y votacion para COREs 2017","</p>"))))
                )
     ) 
