@@ -16,8 +16,6 @@ library(hrbrthemes)
 library(stringr)
 library(emo)
 
-## ENGLISH VERSION
-
 hrbrthemes::update_geom_font_defaults(family=font_fsm)
 
 URLd18 = "https://raw.githubusercontent.com/maibennett/d18/main/data/otros/d_export.csv"
