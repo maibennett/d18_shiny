@@ -1,0 +1,12 @@
+name: distrito18_map
+title: distrito18_map
+username:
+account: maibennett
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3375401
+bundleId: 4003282
+url: https://maibennett.shinyapps.io/distrito18_map/
+when: 1608243302.84933
+asMultiple: FALSE
+asStatic: FALSE
